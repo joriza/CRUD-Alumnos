@@ -19,7 +19,6 @@ namespace CRUD_Alumnos.Controllers
             return View(db.Alumno.ToList()); //Para enviar todos los alumnos
         }
 
-
         public  ActionResult Agregar() 
         {
             return View(); 
@@ -28,6 +27,8 @@ namespace CRUD_Alumnos.Controllers
         [HttpPost]
         public ActionResult Agregar(Alumno a)
         {
+            if(ModelState.IsValid)
+                return View();
             return View();
         }
 
