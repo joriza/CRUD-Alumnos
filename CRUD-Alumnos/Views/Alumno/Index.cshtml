@@ -13,50 +13,54 @@
     @Html.ActionLink("Crear Nuevo", "Agregar", null, new { @class = "btn btn-primary" }) <!-- // Boton Bootstrap -->
 </p>
 <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreCompleto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Edad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sexo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRegistro)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreCompleto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sexo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </th>
+        <th></th>
+    </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreCompleto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Edad)
-                </td>
-                <td>
-                    @if (item.Sexo == "M")
-                    {
-                        <span>Masculino</span>
-                    }
-                    else
-                    {
-                        <span>Femenino</span>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaRegistro)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @Style = "color:yellow" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @Style = "color:green" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @Style = "color:red" }) |
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>
+            <td>
+                @if (item.Sexo == "M")
+                {
+                    <span>Masculino</span>
+                }
+                else
+                {
+                    <span>Femenino</span>
+                }
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.FechaRegistro) // Fecha y hora*@
+                @*@Html.DisplayFor(modelItem => item.FechaRegistro.ToShortDateString()) // Esta forma falla porque es una expresion lamda*@
+                @*@Html.DisplayForModel(item.FechaRegistro.ToShortDateString()) // Presenta la fecha como un numero*@
+                @item.FechaRegistro.ToShortDateString() @*// Fecha formato solo fecha sin hora.*@
+
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @Style = "color:yellow" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @Style = "color:green" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @Style = "color:red" }) |
+            </td>
+        </tr>
+    }
 
 </table>
