@@ -25,7 +25,7 @@ namespace CRUD_Alumnos.Models
     [MetadataType(typeof(AlumnoCE))]
     public partial class Alumno
     {
-        public int Estado { get; set; }
+        public int Estado { get;}
         [DisplayName("Nombres y Apellidos")]
         public string NombreCompleto { get { return Nombres + " " + Apellidos; } }
     }

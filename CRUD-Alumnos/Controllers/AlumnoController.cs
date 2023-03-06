@@ -50,6 +50,50 @@ namespace CRUD_Alumnos.Controllers
             }
 
         }
+    
+        public ActionResult Editar(int Id)
+        {
+            using (var db = new AlumnosContext())
+            { 
+                Alumno alu = db.Alumno.Where(a => a.Id == Id).FirstOrDefault();  // Si encuentra más de 1 registro, solo tomará el primero encontrado.
+                // Alumno al2 = db.Alumno.Find(Id); // Para usar de esta forma tengo que estar seguro que solo encontrará 1 registro.
+                return View(alu);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar(Alumno a) // Los datos que vinen de la vista.
+        {
+            try
+            {
+                if (!ModelState.IsValid) // Si las validaciones no son correctas, vuelve a la vista Agregar.
+                    return View();
+
+                using (var db = new AlumnosContext())
+                {
+                    Alumno al = db.Alumno.Find(a.Id); // Preparo los datos que voy a enviar a la base de datos.
+                    al.Nombres = a.Nombres;
+                    al.Apellidos = a.Apellidos;
+                    al.Edad = a.Edad;
+                    al.Sexo= a.Sexo;
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index"); // Si todo salió bien, redireccionar a otra página que no es la vista el propio controlador.
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
+
 
 
 
