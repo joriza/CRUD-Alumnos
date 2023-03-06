@@ -57,10 +57,20 @@
             </td>
             <td>
                 @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @Style = "color:yellow" }) |
-                @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @Style = "color:green" }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @Style = "color:red" }) |
+                @Html.ActionLink("Detalles", "DetalleAlumno", new { id = item.Id }, new { @Style = "color:green" }) |
+                @Html.ActionLink("Eliminar", "EliminarAlumno", new { id = item.Id }, new { @Style = "color:red" }) |
             </td>
         </tr>
     }
 
 </table>
+
+@section  scripts {
+    <script>
+        $(".aElimina").click(function (event) {
+            if (!confirm('Está seguro que desea eliminar?')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+}

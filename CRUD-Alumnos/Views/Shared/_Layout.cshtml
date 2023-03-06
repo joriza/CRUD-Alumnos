@@ -40,6 +40,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script> @*Activa mostrar mensajes de error de AddModelError*@
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false) @*Si el valor fuese true, es necesario que esté en cada vista.*@
 </body>
 </html>

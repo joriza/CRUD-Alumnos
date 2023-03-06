@@ -67,7 +67,7 @@ namespace CRUD_Alumnos.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) // Si las validaciones no son correctas, vuelve a la vista Agregar.
+                if (!ModelState.IsValid) // Si las validaciones con los data annotation no son correctas, vuelve a la vista Agregar.
                     return View();
 
                 using (var db = new AlumnosContext())
@@ -91,88 +91,104 @@ namespace CRUD_Alumnos.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        // GET: Alumno/Details/5
-        public ActionResult Details(int id)
+        public ActionResult DetalleAlumno(int id)
         {
-            return View();
-        }
-
-        // GET: Alumno/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Alumno/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            using (var db = new AlumnosContext())
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                Alumno alu = db.Alumno.Find(id);
+                return View(alu);
             }
         }
 
-        // GET: Alumno/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EliminarAlumno(int id)
         {
-            return View();
-        }
-
-        // POST: Alumno/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            using (var db = new AlumnosContext())
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                Alumno alu = db.Alumno.Find(id);
+                db.Alumno.Remove(alu);
+                db.SaveChanges();
+                return RedirectToAction("Index"); // Para ir a una vista que no es la del propio controlador.
             }
         }
 
-        // GET: Alumno/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: Alumno/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+
+
+
+
+
+
+        //// GET: Alumno/Details/5
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
+
+        //// GET: Alumno/Create
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        //// POST: Alumno/Create
+        //[HttpPost]
+        //public ActionResult Create(FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+        //// GET: Alumno/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
+
+        //// POST: Alumno/Edit/5
+        //[HttpPost]
+        //public ActionResult Edit(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+        //// GET: Alumno/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
+
+        //// POST: Alumno/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
