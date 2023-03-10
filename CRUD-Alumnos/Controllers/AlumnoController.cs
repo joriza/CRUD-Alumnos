@@ -12,23 +12,52 @@ namespace CRUD_Alumnos.Controllers
         // GET: Alumno
         public ActionResult Index()
         {
-            AlumnosContext db = new AlumnosContext(); // Abro una conexión.
+            //Utilizando Linq
+            //using (AlumnosContext db = new AlumnosContext()) // Abro una conexión.
+            //{
 
-            //List<Alumno> lista = db.Alumno.Where(a => a.Edad > 18).ToList(); //Linq
+            //    //List<Alumno> lista = db.Alumno.Where(a => a.Edad > 18).ToList(); //Linq
 
-            return View(db.Alumno.ToList()); //Para enviar todos los alumnos
+            //    // Otra forma de armar un conjunto de datos con Linq.
+            //    // Es lo más aconsejable para armar un conjunto de datos proveniente de varias tablas.
+            //    var data = from a in db.Alumno
+            //               join c in db.Ciudad on a.CodCiudad equals c.Id
+            //               select new AlumnoCE
+            //               {
+            //                   Id = a.Id,
+            //                   Nombres = a.Nombres,
+            //                   Apellidos = a.Apellidos,
+            //                   Edad = a.Edad,
+            //                   Sexo = a.Sexo,
+            //                   NombreCiudad = c.Nombre,
+            //                   FechaRegistro = a.FechaRegistro
+            //               };
+
+            //    // return View(db.Alumno.ToList()); //Para enviar todos los alumnos
+            //    return View(data.ToList()); //Para enviar todos los alumnos
+            //}
+
+            // Con consulta SQL
+            string sql = @"SELECT a.Id , a.Nombres, a.Apellidos, a.Edad, a.Sexo, a.FechaRegistro, c.Nombre AS NombreCiudad
+                                FROM Alumno a
+                                inner join Ciudad c on a.CodCiudad = c.Id";
+
+            using (AlumnosContext db = new AlumnosContext()) // Abro una conexión.
+            {
+                return View(db.Database.SqlQuery<AlumnoCE>(sql).ToList()); 
+            }
         }
 
-        public  ActionResult Agregar() 
+        public ActionResult Agregar()
         {
-            return View(); 
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Agregar(Alumno a)
         {
-            if(!ModelState.IsValid) // Si las validaciones no son correctas, vuelve a la vista Agregar.
+            if (!ModelState.IsValid) // Si las validaciones no son correctas, vuelve a la vista Agregar.
                 return View();
 
             try
@@ -36,7 +65,7 @@ namespace CRUD_Alumnos.Controllers
                 //using(AlumnosContext db = new AlumnosContext()) //Abro conexion y cuanto termina using cierra la conexion automáticamente.
                 using (var db = new AlumnosContext()) // Otra forma de abrir conexion. Se cierra cuando finaliza el comando using.
                 {
-                    a.FechaRegistro = DateTime.Now; 
+                    a.FechaRegistro = DateTime.Now;
 
                     db.Alumno.Add(a); // Comando para cargar registro en la BD.  
                     db.SaveChanges(); // Agregar cambios a la BD. Una expecie de Commit o Flush.
@@ -50,11 +79,24 @@ namespace CRUD_Alumnos.Controllers
             }
 
         }
-    
+
+        public ActionResult Agregar2()
+        {
+            return View();
+        }
+
+        public ActionResult ListaCiudades()
+        {
+            using (var db = new AlumnosContext())
+            {
+                return PartialView(db.Ciudad.ToList());
+            }
+        }
+
         public ActionResult Editar(int Id)
         {
             using (var db = new AlumnosContext())
-            { 
+            {
                 Alumno alu = db.Alumno.Where(a => a.Id == Id).FirstOrDefault();  // Si encuentra más de 1 registro, solo tomará el primero encontrado.
                 // Alumno al2 = db.Alumno.Find(Id); // Para usar de esta forma tengo que estar seguro que solo encontrará 1 registro.
                 return View(alu);
@@ -76,7 +118,7 @@ namespace CRUD_Alumnos.Controllers
                     al.Nombres = a.Nombres;
                     al.Apellidos = a.Apellidos;
                     al.Edad = a.Edad;
-                    al.Sexo= a.Sexo;
+                    al.Sexo = a.Sexo;
 
                     db.SaveChanges();
 
@@ -111,10 +153,13 @@ namespace CRUD_Alumnos.Controllers
             }
         }
 
-
-
-
-
+        public static string NombreCiudad(int CodCiudad) // Se crea como estático para acceder directamente sin tener que instanciarlo.
+        {
+            using (var db = new AlumnosContext())
+            {
+                return db.Ciudad.Find(CodCiudad).Nombre; // Consulta linq
+            }
+        }
 
 
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CRUD_Alumnos.Models.Alumno>
+﻿@model IEnumerable<CRUD_Alumnos.Models.AlumnoCE>
 
 @{
     ViewBag.Title = "Index";
@@ -24,6 +24,9 @@
             @Html.DisplayNameFor(model => model.Sexo)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.NombreCiudad)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FechaRegistro)
         </th>
         <th></th>
@@ -47,6 +50,11 @@
                 {
                     <span>Femenino</span>
                 }
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.CodCiudad)*@ @*// De esta forma muestra el código de ciudad, pero quiero que muetre el nombre de la ciudad*@
+                @*@CRUD_Alumnos.Controllers.AlumnoController.NombreCiudad(item.CodCiudad)*@ @*// Invoco el controlador que muestra nombre de ciudad y le paso el código de ciudad*@
+                @item.NombreCiudad
             </td>
             <td>
                 @*@Html.DisplayFor(modelItem => item.FechaRegistro) // Fecha y hora*@

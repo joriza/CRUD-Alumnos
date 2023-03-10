@@ -214,6 +214,8 @@
     <Content Include="Views\Alumno\Agregar.cshtml" />
     <Content Include="Views\Alumno\Editar.cshtml" />
     <Content Include="Views\Alumno\DetalleAlumno.cshtml" />
+    <Content Include="Views\Alumno\Agregar2.cshtml" />
+    <Content Include="Views\Alumno\ListaCiudades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
